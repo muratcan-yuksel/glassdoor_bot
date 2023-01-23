@@ -108,12 +108,12 @@ test.describe("navigation", () => {
       return links.map((el) => el.querySelector("a").getAttribute("href"));
     });
     console.log(links);
+    console.log(links.length);
+    //click on the chosen job
+    //note that it just clicks, it doesn't open the link in the new page
+    await page.evaluate((link) => {
+      const el = document.querySelector(`a[href="${link}"]`);
+      el.click();
+    }, links[2]);
   });
-  // locator('[data-test="MainColSummary"]')
-  // getByRole("listitem")
-  //   .filter({
-  //     hasText:
-  //       "One Stop Swap, Inc.Full Stack Web DeveloperRemote$20.00 Per Hour(Employer est.)E",
-  //   })
-  //   .locator('[data-test="job-link"]');
 });
