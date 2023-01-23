@@ -22,23 +22,31 @@ test.describe("Logging in", () => {
     await popup.locator("#email").fill(process.env.LOGIN_EMAIL);
     await popup.locator("#pass").fill(process.env.LOGIN_PASS);
     await popup.getByLabel("Log in").click();
-    // //click login by facebook
-    // await page
-    //   .locator("div:nth-child(2) > .q-click-wrapper > .q-relative")
-    //   .click();
-    // //enter email
-    // await page
-    //   .getByPlaceholder("Email address or phone number")
-    //   .fill(process.env.LOGIN_EMAIL);
-    // //enter password
-    // await page.getByPlaceholder("Password").fill(process.env.LOGIN_PASS);
-    // //click login button
-    // await page.click("button:has-text('Log in')");
+    await popup.waitForLoadState();
+
+    await page.waitForNavigation();
 
     const cookies = await context.cookies();
     const cookieJson = JSON.stringify(cookies);
 
     fs.writeFileSync("cookies.json", cookieJson);
+
+    await browser.close();
+  });
+});
+
+test.describe("navigation", () => {
+  test("glassdoor navigation", async ({}) => {
+    const browser = await firefox.launch();
+    const context = await browser.newContext();
+
+    const cookies = fs.readFileSync("cookies.json", "utf8");
+
+    const deserializedCookies = JSON.parse(cookies);
+    await context.addCookies(deserializedCookies);
+
+    const page = await context.newPage();
+    await page.goto("https://www.glassdoor.com");
 
     // await browser.close();
   });
