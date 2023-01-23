@@ -20,7 +20,8 @@ test.describe("Logging in", () => {
     // console.log(await popup.title());
 
     await popup.locator("#email").fill(process.env.LOGIN_EMAIL);
-
+    await popup.locator("#pass").fill(process.env.LOGIN_PASS);
+    await popup.getByLabel("Log in").click();
     // //click login by facebook
     // await page
     //   .locator("div:nth-child(2) > .q-click-wrapper > .q-relative")
@@ -34,10 +35,10 @@ test.describe("Logging in", () => {
     // //click login button
     // await page.click("button:has-text('Log in')");
 
-    // const cookies = await context.cookies();
-    // const cookieJson = JSON.stringify(cookies);
+    const cookies = await context.cookies();
+    const cookieJson = JSON.stringify(cookies);
 
-    // fs.writeFileSync("cookies.json", cookieJson);
+    fs.writeFileSync("cookies.json", cookieJson);
 
     // await browser.close();
   });
